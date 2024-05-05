@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "node",
+            "name": "Main",
+            "request": "launch",
+            "program": "${workspaceFolder}\\main.js"
+        }
+    ]
+}

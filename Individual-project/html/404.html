@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Страницы не существует</title>
+</head>
+<body style="text-align: center;">
+    <h1> Похоже такой страницы нет :( </h1>
+    <p style="font-size: 18px;"> Не переживайте, вы всё ещё можете вернуться на <a href="/" style="color: inherit;"> <b> главную станицу </b> </a> </p>
+    <script>
+        if (localStorage.getItem('site-theme') == null || localStorage.getItem('site-theme') == 'dark'){
+            document.body.style.background = '#2d2d2d';
+            document.body.style.color = '#fff';
+        }
+        else {
+            document.body.style.background = '#fff';
+        }
+    </script>
+</body>
+</html>

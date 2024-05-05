@@ -1,0 +1,157 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.body-dark-theme {
+    background-color: #252424;
+    color: #f9f9f9;
+}
+
+
+
+
+
+.header-dark-theme {
+    background-color: #333;
+    color: #f9f9f9;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+header button{
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-left: 5px;
+    transition: transform 0.2s ease;
+}
+
+.header-nav a{
+    text-decoration: none;
+}
+
+header button:hover{
+    transform: scale(1.1);
+}
+
+.header-text {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: bold;
+}
+
+.site-theme{
+    padding: 0;
+    font-size: 20px;
+    background: none;
+}
+
+#dark-theme-toggle{
+    transition: transform .8s;
+}
+
+#dark-theme-toggle.moon {
+    transform: scale(1) rotate(360deg);
+}
+
+.header-nav button{
+    background-color: #111;
+    color: #fff;
+}
+
+.login-button {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.login-button:hover {
+    background-color: #0056b3;
+}
+
+
+
+
+
+.container {
+    display: block;
+    flex-wrap: wrap;
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease;
+}
+
+.card-light-theme {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.card-dark-theme {
+    background-color: #2d2d2d;
+    border: 1px solid #1c1c1c;
+    box-shadow: 0 2px 4px rgba(22, 22, 22, 0.2);
+}
+
+.card:hover{
+    transform: scale(1.05);
+}
+
+.card-dark-theme:hover{
+    transform: scale(1.05);
+}
+
+
+
+
+
+.main-nav-buttons{
+    margin: 0 auto;
+    padding-top: 40px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 10px;
+    /* max-width: 800px; */
+    max-width: 90%;
+}
+
+.main-nav-buttons a{
+    text-decoration: none;
+}
+
+.main-nav-buttons button{
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-left: 5px;
+    transition: transform 0.2s ease;
+    background: #5da065;
+    color: #fff;
+
+    &:hover{
+        transform: scale(1.1);
+    }
+}
