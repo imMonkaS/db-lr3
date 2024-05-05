@@ -1,6 +1,6 @@
 'use strict';
 
-function create_table_from_db_json(data, name, db_root_path, parent){
+function create_table_from_db_json(data, name, db_root_path, parent, allow_insert = true){
     let table_name_text = document.createElement('h1');
     table_name_text.innerHTML = name;
     parent.append(table_name_text);
@@ -56,7 +56,7 @@ function create_table_from_db_json(data, name, db_root_path, parent){
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.status == 'success'){
-                        update_db(`${db_root_path}/get_db`, name.toLowerCase().split(' ').join('_'), db_root_path);
+                        delete_cell.parentElement.remove();
                     }
                     else{
                         alert('Something went wrong');
@@ -86,57 +86,58 @@ function create_table_from_db_json(data, name, db_root_path, parent){
     parent.append(table);
 
     // Insertion fields
-    let insert_title = document.createElement('h2');
-    insert_title.innerHTML = `Вставка в таблицу ${name}`;
-    parent.append(insert_title);
+    if (allow_insert){
+        let insert_title = document.createElement('h2');
+        insert_title.innerHTML = `Вставка в таблицу ${name}`;
+        parent.append(insert_title);
 
-    for(let el of data[1].slice(1)){
-        let capitalizedName = capitalizeFirstLetter(el['name'].split('_').join(' '))
+        for(let el of data[1].slice(1)){
+            let capitalizedName = capitalizeFirstLetter(el['name'].split('_').join(' '))
 
-        let field_div = document.createElement('div');
-        field_div.classList.add('insert-div')
-        
-        let field_name = document.createElement('span');
-        field_name.innerHTML = capitalizedName;
-        
-        let field_input = document.createElement('input');
-        field_input.name = el['name'];
-        field_input.classList.add('insert-field')
+            let field_div = document.createElement('div');
+            field_div.classList.add('insert-div')
+            
+            let field_name = document.createElement('span');
+            field_name.innerHTML = capitalizedName;
+            
+            let field_input = document.createElement('input');
+            field_input.name = el['name'];
+            field_input.classList.add('insert-field')
 
-        field_div.append(field_name);
-        field_div.append(field_input);
-        parent.append(field_div);
-    }
-    let submit_btn = document.createElement('button');
-    submit_btn.innerHTML = 'Вставить';
-    submit_btn.classList.add('insert-submit');
-
-    submit_btn.onclick = ()=>{
-        let fields = {}
-        for (let field of document.querySelectorAll('.insert-field')){
-            fields[field.name] = field.value;
+            field_div.append(field_name);
+            field_div.append(field_input);
+            parent.append(field_div);
         }
-        fetch(`${db_root_path}/insert?db=${name.toLowerCase().split(' ').join('_')}`, {
-        method: "POST",
-        body: JSON.stringify({
-            fields,
-        }),
-        headers: {
-            "Content-type": "application/json; charset=UTF-8"
-        }
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            if (data.status == 'success'){
-                update_db(`${db_root_path}/get_db`, name.toLowerCase().split(' ').join('_'), db_root_path);
-            }
-            else{
-                alert('Something went wrong');
-            }
-        });
-    }
+        let submit_btn = document.createElement('button');
+        submit_btn.innerHTML = 'Вставить';
+        submit_btn.classList.add('insert-submit');
 
-    parent.append(submit_btn);
+        submit_btn.onclick = ()=>{
+            let fields = {}
+            for (let field of document.querySelectorAll('.insert-field')){
+                fields[field.name] = field.value;
+            }
+            fetch(`${db_root_path}/insert?db=${name.toLowerCase().split(' ').join('_')}`, {
+            method: "POST",
+            body: JSON.stringify({
+                fields,
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.status == 'success'){
+                    update_db(`${db_root_path}/get_db`, name.toLowerCase().split(' ').join('_'), db_root_path);
+                }
+                else{
+                    alert('Something went wrong');
+                }
+            });
+        }
+        parent.append(submit_btn);
+    }
 
     console.log(data)
     apply_theme();

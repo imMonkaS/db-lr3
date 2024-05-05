@@ -92,6 +92,40 @@ app.delete('/lr1/delete', async function(req, res){
     })
 });
 
+app.get('/lr1/search', function(req, res){
+    sql_boolean_request = []
+    console.log(req.query);
+    req_query = req.query;
+    db = req_query.db;
+    delete req_query['db'];
+    for (key of Object.keys(req.query)){
+        if (req_query[key] != ''){
+            if (typeof(req_query[key]) == 'string'){
+                sql_boolean_request.push(key + " = '" + req_query[key] + "'");
+            }
+            else{
+                sql_boolean_request.push(key + ' = ' + req_query[key]);
+            }
+        }
+    }
+    sql_query = `select * from ${db}`;
+    if (sql_boolean_request.length != 0){
+        sql_query = `select * from ${db} where ${sql_boolean_request.join(' and ')};`
+    }
+
+    console.log(sql_query);
+
+    db_vacations_pool.query(
+        sql_query
+    ).then(function(data){
+        res.send(data);
+    })
+    .catch(error => {
+        console.log(error);
+        res.send({status: 'error'});
+    })
+});
+
 //1111 1111//
 
 //2222 2222//

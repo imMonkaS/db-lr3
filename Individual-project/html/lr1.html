@@ -24,9 +24,18 @@
         <a href="/lr1/show?db=vacations"> <button>Vacations</button> </a>
         <a href="/lr1/show?db=employees"> <button>Employees</button> </a>
         <a href="/lr1/show?db=documents"> <button>Documents</button> </a>
+        <a href="/lr1"> <button>Поиск</button> </a>
     </div>
     <div class="container">
         <h1> Поиск </h1>
+        <div class="search-div">
+            <span> Выбор БД: </span>
+            <select id="selected_db" onchange="select_change(this.options[this.selectedIndex].value)">
+                <option> Vacations </option>
+                <option> Employees </option>
+                <option> Documents </option>
+            </select>
+        </div>
     </div>
     <div class="wrapper">
 
@@ -40,6 +49,7 @@
     
     <script type="text/javascript" src="js/store_local_settings.js"> </script>
     <script type="text/javascript" src="js/theme_changer.js"> </script>
+    <script type="text/javascript" src="js/show_db.js"> </script>
     <script type="text/javascript" src="js/lr1_search.js"> </script>
 </body>
 </html>

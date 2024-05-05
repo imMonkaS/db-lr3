@@ -182,3 +182,34 @@ header button:hover{
         transform: scale(1.1);
     }
 }
+
+
+.search-input-container{
+    margin-top: 15px;
+}
+
+.search-div{
+    padding-bottom: 20px;
+    font-size: 18px;
+}
+
+.search-div input{
+    margin-left: 10px;
+    font-size: 18px;
+    width: 300px;
+}
+
+.search-submit{
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-left: 5px;
+    transition: transform 0.2s ease;
+    background: #25597e;
+    color: #fff;
+
+    &:hover{
+        transform: scale(1.1);
+    }
+}
