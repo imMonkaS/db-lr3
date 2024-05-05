@@ -147,6 +147,12 @@ app.get('/lr2/task_14', function(req, res){
     });
 });
 
+app.get('/lr2/task_34', function(req, res){
+    db_books_pool.query(`call FillDeliveries();`).then(function(data) {
+        res.json(data);
+    });
+});
+
 app.get('/lr2/get_db', function(req, res){
     db = req.query.db;
     db_books_pool.query(`select * from ${db}`).then(function(data) {

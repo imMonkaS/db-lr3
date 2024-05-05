@@ -34,7 +34,7 @@ submit3.onclick = function(){
     .then(response => response.json())
     .then(data => {
         if (parseInt(data[0][0]['books_price']) < 1000 || parseInt(data[0][0]['books_price']) > 5000)
-            response3.innerHTML = data[0][0]['books_price']
+            response3.innerHTML = 'Сумма закупок = ' + data[0][0]['books_price']
         else
             response3.innerHTML = '';
             
@@ -44,4 +44,17 @@ submit3.onclick = function(){
 
 clear3.onclick = function(){
     response3.innerHTML = "...";
+}
+
+submit4.onclick = function(){
+    fetch('/lr2/task_34')
+    .then(response => response.json())
+    .then(data => {
+        response4.innerHTML = 'Выполнено';
+    })
+    .catch(error => console.error("error: ", error));
+}
+
+clear4.onclick = function(){
+    response4.innerHTML = "...";
 }
