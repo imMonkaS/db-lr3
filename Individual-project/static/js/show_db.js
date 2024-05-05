@@ -13,6 +13,9 @@ function create_table_from_db_json(data, name, db_root_path, parent){
     table_header.classList.add('header');
     table.append(table_header);
 
+    let empyt_cell = document.createElement('div');
+    empyt_cell.classList.add('cell');
+    table_header.append(empyt_cell);
     for (let el of data[1]){
         let h_cell = document.createElement('div');
         h_cell.classList.add('cell');
@@ -24,6 +27,44 @@ function create_table_from_db_json(data, name, db_root_path, parent){
         let row = document.createElement('div');
         row.classList.add('row');
         table.append(row);
+
+        let delete_cell = document.createElement('div');
+        delete_cell.classList.add('cell');
+        delete_cell.classList.add('delete');
+        delete_cell.innerHTML = 'Delete';
+
+        delete_cell.onclick = (event)=>{
+            let id = delete_cell.parentElement.children[1].innerHTML;
+            let field_name = delete_cell.parentElement.parentElement.children[0].children[1].innerHTML;
+
+            if (!event.ctrlKey){
+                let c = confirm("Вы точно хотите удалить запись под номером " + id);
+                if (!c)
+                    return;
+            }
+            
+            fetch(`${db_root_path}/delete?db=${name.toLowerCase().split(' ').join('_')}`, {
+                method: "DELETE",
+                body: JSON.stringify({
+                    id,
+                    field_name
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.status == 'success'){
+                        update_db(`${db_root_path}/get_db`, name.toLowerCase().split(' ').join('_'), db_root_path);
+                    }
+                    else{
+                        alert('Something went wrong');
+                    }
+                });
+        }
+
+        row.append(delete_cell);
         for (let value of Object.values(el)){
             let r_cell = document.createElement('div');
             r_cell.classList.add('cell');
@@ -76,16 +117,16 @@ function create_table_from_db_json(data, name, db_root_path, parent){
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
-    })
-    .then((response) => response.json())
-    .then((data) => {
-        if (data.status == 'success'){
-            update_db(`${db_root_path}/get_db`, name.toLowerCase().split(' ').join('_'), db_root_path);
-        }
-        else{
-            alert('Something went wrong');
-        }
-    });
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.status == 'success'){
+                update_db(`${db_root_path}/get_db`, name.toLowerCase().split(' ').join('_'), db_root_path);
+            }
+            else{
+                alert('Something went wrong');
+            }
+        });
     }
 
     parent.append(submit_btn);

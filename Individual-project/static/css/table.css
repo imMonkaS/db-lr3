@@ -42,4 +42,13 @@
 .cell{
   padding: 6px 12px;
   display: table-cell;
+
+  &.delete{
+    cursor: pointer;
+    transition: .5s;
+
+    &:hover{
+        color: red;
+    }
+  }
 }

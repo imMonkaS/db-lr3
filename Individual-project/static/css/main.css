@@ -46,7 +46,7 @@ header button:hover{
 }
 
 .header-text {
-    position: fixed;
+    position: absolute;
     left: 50%;
     transform: translateX(-50%);
     font-weight: bold;

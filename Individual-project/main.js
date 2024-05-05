@@ -76,6 +76,21 @@ app.get('/lr1/show', function(req, res){
     res.sendFile("lr1_show.html", {root: "html"});
 });
 
+app.delete('/lr1/delete', async function(req, res){
+    console.log(req.body)
+
+    await db_vacations_pool.query(
+        `delete from ${req.query.db} where ${req.body.field_name} = ${req.body.id};
+        `
+    ).then(function(data){
+        res.send({status: 'success'});
+    })
+    .catch(error => {
+        console.log(error);
+        res.send({status: 'error'});
+    })
+});
+
 //1111 1111//
 
 //2222 2222//
@@ -130,6 +145,21 @@ app.post('/lr2/insert', async function(req, res){
     })
     .catch(error => {
         // console.log(error);
+        res.send({status: 'error'});
+    })
+});
+
+app.delete('/lr2/delete', async function(req, res){
+    console.log(req.body)
+
+    await db_books_pool.query(
+        `delete from ${req.query.db} where ${req.body.field_name} = ${req.body.id};
+        `
+    ).then(function(data){
+        res.send({status: 'success'});
+    })
+    .catch(error => {
+        console.log(error);
         res.send({status: 'error'});
     })
 });
