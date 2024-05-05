@@ -39,28 +39,41 @@ app.get('/lr1', function(req, res){
     res.sendFile("lr1.html", {root: "html"});
 });
 
-app.post('/lr1', function(req, res){
-    console.log(req.body.text1);
-
-    res.sendFile("lr1.html", {root: "html"});
-});
-
-app.get('/lr1/get_db_vacations_documents', function(req, res){
-    db_vacations_pool.query(`select * from documents`).then(function(data) {
+app.get('/lr1/get_db', function(req, res){
+    db = req.query.db;
+    db_vacations_pool.query(`select * from ${db}`).then(function(data) {
         res.json(data);
+    })
+    .catch(error => {
+        // console.log(error);
+        res.sendFile("lr1_show.html", {root: "html"});
     });
 });
 
-app.get('/lr1/get_db_vacations_vacations', function(req, res){
-    db_vacations_pool.query(`select * from vacations`).then(function(data) {
-        res.json(data);
-    });
+app.post('/lr1/insert', async function(req, res){
+    fields = []
+    values = []
+    for (key of Object.keys(req.body.fields)){
+        if (req.body.fields[key] != ''){
+            fields.push(key);
+            values.push("'" + req.body.fields[key] + "'");
+        }
+    }
+
+    await db_vacations_pool.query(
+        `insert into ${req.query.db} (${fields.join(', ')}) values (${values.join(', ')});
+        `
+    ).then(function(data){
+        res.send({status: 'success'});
+    })
+    .catch(error => {
+        // console.log(error);
+        res.send({status: 'error'});
+    })
 });
 
-app.get('/lr1/get_db_vacations_employees', function(req, res){
-    db_vacations_pool.query(`select * from employees`).then(function(data) {
-        res.json(data);
-    });
+app.get('/lr1/show', function(req, res){
+    res.sendFile("lr1_show.html", {root: "html"});
 });
 
 //1111 1111//
@@ -86,8 +99,8 @@ app.get('/lr2/task_14', function(req, res){
 
 app.get('/lr2/get_db', function(req, res){
     db = req.query.db;
-    db_books_pool.query(`select * from ${db}`).then(function(data_authors) {
-        res.json(data_authors);
+    db_books_pool.query(`select * from ${db}`).then(function(data) {
+        res.json(data);
     })
     .catch(error => {
         // console.log(error);
@@ -97,6 +110,28 @@ app.get('/lr2/get_db', function(req, res){
 
 app.get('/lr2/show', function(req, res){
     res.sendFile("lr2_show.html", {root: "html"});
+});
+
+app.post('/lr2/insert', async function(req, res){
+    fields = []
+    values = []
+    for (key of Object.keys(req.body.fields)){
+        if (req.body.fields[key] != ''){
+            fields.push(key);
+            values.push("'" + req.body.fields[key] + "'");
+        }
+    }
+
+    await db_books_pool.query(
+        `insert into ${req.query.db} (${fields.join(', ')}) values (${values.join(', ')});
+        `
+    ).then(function(data){
+        res.send({status: 'success'});
+    })
+    .catch(error => {
+        // console.log(error);
+        res.send({status: 'error'});
+    })
 });
 
 //2222 2222//

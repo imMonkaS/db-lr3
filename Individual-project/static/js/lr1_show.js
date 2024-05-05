@@ -7,4 +7,4 @@ function capitalizeFirstLetter(string) {
     return string[0].toUpperCase() + string.slice(1);
 }
 
-show_db("/lr2/get_db", db, "/lr2");
+show_db("/lr1/get_db", db, '/lr1');
