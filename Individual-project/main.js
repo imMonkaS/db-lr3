@@ -74,46 +74,25 @@ app.get('/lr2', function(req, res){
 
 app.get('/lr2/task_9', function(req, res){
     db_books_pool.query(`select sum(cost * amount) AS books_price from purchases`).then(function(data) {
-        console.log(data[0][0]['books_price']);
         res.json(data);
     });
 });
 
 app.get('/lr2/task_14', function(req, res){
     db_books_pool.query(`select round(avg(cost), 2) AS avg_book_price from purchases`).then(function(data) {
-        console.log(data[0][0]['avg_book_price']);
         res.json(data);
     });
 });
 
-app.get('/lr2/get_db_books_authors', function(req, res){
-    db_books_pool.query(`select * from authors`).then(function(data_authors) {
+app.get('/lr2/get_db', function(req, res){
+    db = req.query.db;
+    db_books_pool.query(`select * from ${db}`).then(function(data_authors) {
         res.json(data_authors);
-    });
-});
-
-app.get('/lr2/get_db_books_books', function(req, res){
-    db_books_pool.query(`select * from books`).then(function(data_books) {
-        res.json(data_books);
-    });
-});
-
-app.get('/lr2/get_db_books_deliveries', function(req, res){
-    db_books_pool.query(`select * from deliveries`).then(function(data_deliveries) {
-        res.json(data_deliveries);
-    });
-});
-
-app.get('/lr2/get_db_books_pub_house', function(req, res){
-    db_books_pool.query(`select * from publishing_house`).then(function(data_pub_house) {
-        res.json(data_pub_house);
-    });
-});
-
-app.get('/lr2/get_db_books_purchases', function(req, res){
-    db_books_pool.query(`select * from purchases`).then(function(data_purchases) {
-        res.json(data_purchases);
-    });
+    })
+    .catch(error => {
+        // console.log(error);
+        res.sendFile("lr2_show.html", {root: "html"});
+    })
 });
 
 app.get('/lr2/show', function(req, res){

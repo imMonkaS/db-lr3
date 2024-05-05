@@ -1,7 +1,10 @@
 'use strict';
 
-function create_table_from_db_json(data, parent){
-    // if 
+function create_table_from_db_json(data, name, parent){
+    let table_name_text = document.createElement('h1');
+    table_name_text.innerHTML = name;
+    parent.append(table_name_text);
+
     let table = document.createElement('div');
     table.classList.add('table');
 
@@ -32,12 +35,11 @@ function create_table_from_db_json(data, parent){
         }
     }
 
-    console.log(data);
     parent.append(table);
     apply_theme();
 }
 
-function update_db(data){
+function update_db(data, name){
     document.querySelector('div.wrapper').innerHTML = '';
-    create_table_from_db_json(data, document.querySelector('div.wrapper'));
+    create_table_from_db_json(data, name, document.querySelector('div.wrapper'));
 }

@@ -1,70 +1,24 @@
 'use strict';
 
 let params = new URLSearchParams(document.location.search);
-let s = params.get('s');
+let db = params.get('db');
 
-function show_authors(){
-    fetch('/lr2/get_db_books_authors')
+function show_db(db){
+    fetch(`/lr2/get_db?db=${db}`)
     .then(response => response.json())
     .then(data => {
-        create_table_from_db_json(data, document.querySelector('div.wrapper'));
+        create_table_from_db_json(data, capitalizeFirstLetter(db.split('_').join(' ')), document.querySelector('div.wrapper'));
     })
-    .catch(error => console.error("error: ", error));
+    .catch(error =>{
+        let error_text = document.createElement('h1');
+        error_text.innerHTML = `Таблицы ${capitalizeFirstLetter(db.split('_').join(' '))} не существует`;
+        document.querySelector('.wrapper').append(error_text);
+        // console.error("error: ", error)
+    });
 }
 
-function show_books(){
-    fetch('/lr2/get_db_books_books')
-    .then(response => response.json())
-    .then(data => {
-        create_table_from_db_json(data, document.querySelector('div.wrapper'));
-    })
-    .catch(error => console.error("error: ", error));
+function capitalizeFirstLetter(string) {
+    return string[0].toUpperCase() + string.slice(1);
 }
 
-function show_deliveries(){
-    fetch('/lr2/get_db_books_deliveries')
-    .then(response => response.json())
-    .then(data => {
-        create_table_from_db_json(data, document.querySelector('div.wrapper'));
-    })
-    .catch(error => console.error("error: ", error));
-}
-
-function show_pub_house(){
-    fetch('/lr2/get_db_books_pub_house')
-    .then(response => response.json())
-    .then(data => {
-        create_table_from_db_json(data, document.querySelector('div.wrapper'));
-    })
-    .catch(error => console.error("error: ", error));
-}
-
-function show_purchases(){
-    fetch('/lr2/get_db_books_purchases')
-    .then(response => response.json())
-    .then(data => {
-        create_table_from_db_json(data, document.querySelector('div.wrapper'));
-    })
-    .catch(error => console.error("error: ", error));
-}
-
-switch (s){
-    case 'authors':
-        show_authors();
-        break;
-    case 'books':
-        show_books();
-        break;
-    case 'deliveries':
-        show_deliveries();
-        break;
-    case 'pub_house':
-        show_pub_house();
-        break;
-    case 'purchases':
-        show_purchases();
-        break;
-    default:
-        document.querySelector('.wrapper').innerHTML = 'Такой базы данных нет в списке.'
-        break;
-}
+show_db(db);
