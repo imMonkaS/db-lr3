@@ -1,6 +1,8 @@
 const express = require('express');
 const mysql2 = require('mysql2/promise');
 
+process.env.TZ = "Russia/Moscow";
+
 const db_books_pool = mysql2.createPool({
     host: 'localhost',
     user: 'root',
@@ -45,7 +47,7 @@ app.get('/lr1/get_db', function(req, res){
         res.json(data);
     })
     .catch(error => {
-        // console.log(error);
+        console.log(error);
         res.sendFile("lr1_show.html", {root: "html"});
     });
 });
@@ -59,7 +61,7 @@ app.post('/lr1/insert', async function(req, res){
             values.push("'" + req.body.fields[key] + "'");
         }
     }
-
+    console.log(values);
     await db_vacations_pool.query(
         `insert into ${req.query.db} (${fields.join(', ')}) values (${values.join(', ')});
         `
@@ -77,7 +79,6 @@ app.get('/lr1/show', function(req, res){
 });
 
 app.delete('/lr1/delete', async function(req, res){
-    console.log(req.body)
 
     await db_vacations_pool.query(
         `delete from ${req.query.db} where ${req.body.field_name} = ${req.body.id};
@@ -150,7 +151,6 @@ app.post('/lr2/insert', async function(req, res){
 });
 
 app.delete('/lr2/delete', async function(req, res){
-    console.log(req.body)
 
     await db_books_pool.query(
         `delete from ${req.query.db} where ${req.body.field_name} = ${req.body.id};

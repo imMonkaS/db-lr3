@@ -63,15 +63,22 @@ function create_table_from_db_json(data, name, db_root_path, parent){
                     }
                 });
         }
-
         row.append(delete_cell);
+
+
+
         for (let value of Object.values(el)){
             let r_cell = document.createElement('div');
             r_cell.classList.add('cell');
             if (value == null)
                 r_cell.innerHTML = 'NULL';
-            else
-                r_cell.innerHTML = value;
+            else{
+                if (typeof(value) == 'string'){
+                    r_cell.innerHTML = value.replace('T00:00:00.000Z', '');
+                }
+                else
+                    r_cell.innerHTML = value;
+            }
             row.append(r_cell);
         }
     }
@@ -131,7 +138,7 @@ function create_table_from_db_json(data, name, db_root_path, parent){
 
     parent.append(submit_btn);
 
-    // console.log(data)
+    console.log(data)
     apply_theme();
 }
 
