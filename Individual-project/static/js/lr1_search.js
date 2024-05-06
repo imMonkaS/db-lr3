@@ -27,6 +27,8 @@ function generateSearchInputs(parent, data){
         
         let field_input = document.createElement('input');
         field_input.name = el['name'];
+        field_input.placeholder = el['name'];
+        field_input.maxLength = 30;
         field_input.classList.add('search-field')
         field_input.onkeydown = (event)=>{
             if (event.key == 'Enter'){

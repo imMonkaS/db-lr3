@@ -150,6 +150,8 @@ function create_insert_elements(data, parent, table, name, db_root_path){
             
             let field_input = document.createElement('input');
             field_input.name = el['name'];
+            field_input.placeholder = el['name'];
+            field_input.maxLength = 30;
             field_input.classList.add('insert-field')
             
             field_input.onkeydown = (event)=>{
