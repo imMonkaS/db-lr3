@@ -213,3 +213,7 @@ header button:hover{
         transform: scale(1.1);
     }
 }
+
+.index-list a{
+    color: inherit;
+}

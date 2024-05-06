@@ -4,7 +4,7 @@ function create_delete_cell(db_root_path, name){
     let delete_cell = document.createElement('div');
         delete_cell.classList.add('cell');
         delete_cell.classList.add('delete');
-        delete_cell.innerHTML = 'Delete';
+        delete_cell.innerHTML = 'Удалить';
 
         delete_cell.onclick = (event)=>{
             let id = delete_cell.parentElement.children[1].innerHTML;

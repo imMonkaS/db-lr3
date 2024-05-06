@@ -107,7 +107,9 @@ app.get('/lr1/search', function(req, res){
     sql_boolean_request = []
     req_query = req.query;
     db = req_query.db;
+    operator = req_query.bolean_operator
     delete req_query['db'];
+    delete req_query['bolean_operator'];
     for (key of Object.keys(req.query)){
         if (req_query[key] != ''){
             if (typeof(req_query[key]) == 'string'){
@@ -120,7 +122,7 @@ app.get('/lr1/search', function(req, res){
     }
     sql_query = `select * from ${db}`;
     if (sql_boolean_request.length != 0){
-        sql_query = `select * from ${db} where ${sql_boolean_request.join(' and ')};`
+        sql_query = `select * from ${db} where ${sql_boolean_request.join(` ${operator} `)};`
     }
 
     db_vacations_pool.query(

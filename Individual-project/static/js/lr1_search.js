@@ -42,12 +42,23 @@ function generateSearchInputs(parent, data){
     search_btn.innerHTML = 'Искать';
     search_btn.classList.add('search-submit');
 
+    let select_and_or = document.createElement('select');
+    let option_and = document.createElement('option');
+    let option_or = document.createElement('option');
+    option_and.innerHTML = 'and';
+    option_or.innerHTML = 'or';
+    select_and_or.style.marginLeft = '20px'
+
+    select_and_or.appendChild(option_and);
+    select_and_or.appendChild(option_or);
+
     search_btn.onclick = ()=>{
         let fields = {}
         for (let field of document.querySelectorAll('.search-field')){
             fields[field.name] = field.value;
         }
         fields['db'] = selected_db.value;
+        fields['bolean_operator'] = select_and_or.value;
         fetch(`/lr1/search?${serialize(fields)}`, {
         method: "GET",
         headers: {
@@ -63,6 +74,7 @@ function generateSearchInputs(parent, data){
     }
 
     parent.append(search_btn);
+    parent.append(select_and_or);
 }
 
 function select_change(db){
