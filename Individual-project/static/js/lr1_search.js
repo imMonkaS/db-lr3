@@ -28,6 +28,11 @@ function generateSearchInputs(parent, data){
         let field_input = document.createElement('input');
         field_input.name = el['name'];
         field_input.classList.add('search-field')
+        field_input.onkeydown = (event)=>{
+            if (event.key == 'Enter'){
+                search_btn.onclick();
+            }
+        }
 
         field_div.append(field_name);
         field_div.append(field_input);
@@ -43,8 +48,6 @@ function generateSearchInputs(parent, data){
             fields[field.name] = field.value;
         }
         fields['db'] = selected_db.value;
-        console.log(fields);
-        console.log(serialize(fields));
         fetch(`/lr1/search?${serialize(fields)}`, {
         method: "GET",
         headers: {
@@ -63,7 +66,6 @@ function generateSearchInputs(parent, data){
 }
 
 function select_change(db){
-    console.log(document.querySelector('.search-input-container'));
     if (document.querySelector('.search-input-container') !== null){
         document.querySelector('.search-input-container').remove();
     }

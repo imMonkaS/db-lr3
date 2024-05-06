@@ -52,6 +52,18 @@ app.get('/lr1/get_db', function(req, res){
     });
 });
 
+app.get('/lr1/get_latest_row', function(req, res){
+    db = req.query.db;
+    id = req.query.id;
+    db_vacations_pool.query(`select * from ${db} ORDER BY ${id} DESC LIMIT 1`).then(function(data) {
+        res.json(data);
+    })
+    .catch(error => {
+        console.log(error);
+        res.sendFile("lr1_show.html", {root: "html"});
+    });
+});
+
 app.post('/lr1/insert', async function(req, res){
     fields = []
     values = []
@@ -61,7 +73,6 @@ app.post('/lr1/insert', async function(req, res){
             values.push("'" + req.body.fields[key] + "'");
         }
     }
-    console.log(values);
     await db_vacations_pool.query(
         `insert into ${req.query.db} (${fields.join(', ')}) values (${values.join(', ')});
         `
@@ -94,7 +105,6 @@ app.delete('/lr1/delete', async function(req, res){
 
 app.get('/lr1/search', function(req, res){
     sql_boolean_request = []
-    console.log(req.query);
     req_query = req.query;
     db = req_query.db;
     delete req_query['db'];
@@ -112,8 +122,6 @@ app.get('/lr1/search', function(req, res){
     if (sql_boolean_request.length != 0){
         sql_query = `select * from ${db} where ${sql_boolean_request.join(' and ')};`
     }
-
-    console.log(sql_query);
 
     db_vacations_pool.query(
         sql_query
@@ -159,9 +167,21 @@ app.get('/lr2/get_db', function(req, res){
         res.json(data);
     })
     .catch(error => {
-        // console.log(error);
+        console.log(error);
         res.sendFile("lr2_show.html", {root: "html"});
     })
+});
+
+app.get('/lr2/get_latest_row', function(req, res){
+    db = req.query.db;
+    id = req.query.id;
+    db_books_pool.query(`select * from ${db} ORDER BY ${id} DESC LIMIT 1`).then(function(data) {
+        res.json(data);
+    })
+    .catch(error => {
+        console.log(error);
+        res.sendFile("lr2_show.html", {root: "html"});
+    });
 });
 
 app.get('/lr2/show', function(req, res){
