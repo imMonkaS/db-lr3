@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 06, 2024 at 01:45 PM
+-- Generation Time: May 14, 2024 at 09:31 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -64,9 +64,9 @@ INSERT INTO `authors` (`Code_author`, `name_author`, `Birthday`) VALUES
 CREATE TABLE `books` (
   `Code_book` int(11) NOT NULL,
   `Title_book` char(40) DEFAULT 'BLANK',
-  `Code_author` int(11) DEFAULT NULL,
+  `Code_author` int(11) NOT NULL,
   `Pages` int(11) DEFAULT NULL,
-  `Code_publish` int(11) DEFAULT NULL
+  `Code_publish` int(11) NOT NULL
 ) ;
 
 --
@@ -142,9 +142,9 @@ INSERT INTO `publishing_house` (`Code_publish`, `Publish`, `City`) VALUES
 
 CREATE TABLE `purchases` (
   `Code_purchase` int(11) NOT NULL,
-  `Code_book` int(11) DEFAULT NULL,
+  `Code_book` int(11) NOT NULL,
   `Date_order` date DEFAULT NULL,
-  `Code_delivery` int(11) DEFAULT NULL,
+  `Code_delivery` int(11) NOT NULL,
   `Type_purchase` bit(1) DEFAULT NULL,
   `Cost` float NOT NULL,
   `Amount` float NOT NULL
@@ -205,7 +205,7 @@ ALTER TABLE `purchases`
 -- AUTO_INCREMENT for table `authors`
 --
 ALTER TABLE `authors`
-  MODIFY `Code_author` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `Code_author` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `books`
@@ -217,7 +217,7 @@ ALTER TABLE `books`
 -- AUTO_INCREMENT for table `deliveries`
 --
 ALTER TABLE `deliveries`
-  MODIFY `Code_delivery` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `Code_delivery` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `publishing_house`
@@ -229,7 +229,7 @@ ALTER TABLE `publishing_house`
 -- AUTO_INCREMENT for table `purchases`
 --
 ALTER TABLE `purchases`
-  MODIFY `Code_purchase` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Code_purchase` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables

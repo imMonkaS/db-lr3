@@ -189,7 +189,7 @@ function create_insert_elements(data, parent, table, name, db_root_path){
                                         table, db_root_path, name);
                 }
                 else{
-                    alert('Something went wrong');
+                    alert(data.status);
                 }
             });
         }

@@ -81,7 +81,12 @@ app.post('/lr1/insert', async function(req, res){
     })
     .catch(error => {
         // console.log(error);
-        res.send({status: 'error'});
+        if(error.message.indexOf('foreign key') != -1){
+            res.send({status: 'Problem with foreign keys'});
+        }
+        else{
+            res.send({status: 'Something went wrong'});
+        }
     })
 });
 
@@ -208,7 +213,12 @@ app.post('/lr2/insert', async function(req, res){
     })
     .catch(error => {
         // console.log(error);
-        res.send({status: 'error'});
+        if(error.message.indexOf('foreign key') != -1){
+            res.send({status: 'Problem with foreign keys'});
+        }
+        else{
+            res.send({status: 'Something went wrong'});
+        }
     })
 });
 
